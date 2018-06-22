@@ -3,6 +3,8 @@
 #include "TankPlayerController.h"
 #include "Containers/UnrealString.h"
 #include "Math/Vector2D.h"
+#include "Engine/World.h"
+#include "CollisionQueryParams.h"
 
 
 
@@ -41,7 +43,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 	FVector OutHitLocation;
 	if (GetSightRayHitLocation(OutHitLocation))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *OutHitLocation.ToString());
+		UE_LOG(LogTemp, Warning, TEXT("Location: %s"), *OutHitLocation.ToString());
 	}
 }
 
@@ -54,7 +56,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
-	UE_LOG(LogTemp, Warning, TEXT("WorldDirection: %s"), *LookDirection.ToString())
+		(GetLookVectorHitLocation(LookDirection, OutHitLocation));
 	}
 	
 	return true;
@@ -65,3 +67,18 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& 
 	FVector CameraWorldLocation;
 	return DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, CameraWorldLocation, LookDirection);
 	}
+
+bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& OutHitLocation) const
+{
+	FHitResult OutHit;
+	auto Start = PlayerCameraManager->GetCameraLocation();
+	float Reach = 1000000.f;
+	FVector EndTrace = Start + (LookDirection * Reach);
+
+	if (GetWorld()->LineTraceSingleByChannel(OutHit, Start, EndTrace, ECC_Visibility))
+	{
+		OutHitLocation = OutHit.Location;
+		return true;
+	}
+	return false;
+}
