@@ -2,6 +2,7 @@
 
 
 #include "TankPlayerController.h"
+#include "Tank.h"
 #include "Containers/UnrealString.h"
 #include "Math/Vector2D.h"
 #include "Engine/World.h"
