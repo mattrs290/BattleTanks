@@ -33,6 +33,10 @@ public:
 public:
 	void AimAt(FVector OutHitLocation);
 
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void Fire();
+
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrelReference(UTankBarrel* BarreltoSet);
 
