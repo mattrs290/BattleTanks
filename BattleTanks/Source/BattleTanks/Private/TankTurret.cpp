@@ -8,11 +8,9 @@
 void UTankTurret::Pivot(float RelativeSpeed)
 {
 	auto Speed = FMath::Clamp<float>(RelativeSpeed, -1, +1);
-	auto ElevationChange = Speed * MaxDegreesPerSecond*GetWorld()->DeltaTimeSeconds;
-	auto RawNewElevation = RelativeRotation.Pitch + ElevationChange;
+	auto DirectionChange = Speed * MaxDegreesPerSecond*GetWorld()->DeltaTimeSeconds;
+	auto NewDirection = RelativeRotation.Yaw + DirectionChange;
 
-	//auto Elevation = FMath::Clamp<float>(RawNewElevation, MinElevationDegrees, MaxElevationDegrees);
-
-	SetRelativeRotation(FRotator(RawNewElevation, 0, 0));
+	SetRelativeRotation(FRotator(0, NewDirection, 0));
 }
 
