@@ -65,11 +65,6 @@ void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
 	Turret = TurretToSet;
 }
 
-void UTankAimingComponent::Fire()
-{
-	UE_LOG(LogTemp, Warning, TEXT("BOOM!"));
-}
-
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();

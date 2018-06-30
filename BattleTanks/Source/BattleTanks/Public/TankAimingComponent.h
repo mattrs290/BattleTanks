@@ -20,8 +20,6 @@ public:
 
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
 	void SetTurretReference(UTankTurret* TurretToSet);
-	void Fire();
-
 	void AimAt(FVector OutHitLocation, float LaunchSpeed);
 	
 
